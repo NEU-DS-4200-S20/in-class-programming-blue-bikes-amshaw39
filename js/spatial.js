@@ -12,8 +12,8 @@ function spatial(opts={}) {
       right: 0,
       bottom: 0
     },
-    width = 500, // change this to the screenshot's width
-    height = 500, // change this to the screenshot's height
+    width = 468, // change this to the screenshot's width
+    height = 539, // change this to the screenshot's height
     xValue = d => d[0],
     yValue = d => d[1],
     xLabelText = "",
@@ -42,7 +42,7 @@ function spatial(opts={}) {
 
     let svg = d3.select(selector)
       .append("svg")
-        // .attr("width", "100%")
+        .attr("width", "100%")
         .attr("width", width + "px")
         .attr("height", height + "px")
         .attr("preserveAspectRatio", "xMidYMid meet")
@@ -54,7 +54,7 @@ function spatial(opts={}) {
         .attr('xlink:href', opts['backgroundImage'])
         .attr("width", width)
         .attr("height", height)
-      // svg.attr('background-image', "url(" + opts['backgroundImage'] + ")");
+      svg.attr('background-image', "url(" + opts['backgroundImage'] + ")");
     }
 
     svg = svg.append("g")
@@ -85,12 +85,17 @@ function spatial(opts={}) {
     // YOUR CODE HERE:
     // Here, you can modify the radius or any other quality of the points
     // in order to encode additional data.
-    // rScale
+    // rColor
     //   .domain([
-    //     d3.min(data, d => +d['trip start count']),
-    //     d3.max(data, d => +d['trip start count'])
-    //     ])
-    //   .range([1, 100]);
+    //     d3.
+    //     points])
+    rScale
+      .domain([
+        d3.min(data, d => +d['trip start count']),
+        d3.max(data, d => +d['trip start count'])
+        ])
+      .range([1, 15]);
+
 
     points = points.enter()
       .append("circle")
@@ -98,10 +103,11 @@ function spatial(opts={}) {
       .merge(points)
         .attr("cx", X)
         .attr("cy", Y)
-        .attr("r", (d) => { return 5; })
-        // .attr("r", (d) => { return rScale(+d['trip start count'])})
+        // .attr("r", (d) => { return 5; })
+        .attr("r", (d) => { return rScale(+d['trip start count'])})
+        // .attr("r", (d) => { return rScale(+d['trip end count'])})
         .attr("fill", "purple")
-        .attr("opacity", 0.7);
+        .attr("opacity", 0.8);
     
     selectableElements = points;
     
